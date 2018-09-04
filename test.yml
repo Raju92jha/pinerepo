@@ -1,0 +1,27 @@
+- hosts: localhost
+  tasks: 
+  - package: 
+        name: "php"
+        state: present
+  - package:
+        name: "mysql"
+        state: present
+  - package:
+        name: "nginx"
+        state: "present"
+  - service:
+        name: "nginx"
+        state: "started"
+  - get_url:
+        url: "http://wordpress.org/latest.zip"
+    ignore_errors: yes
+  - name: create domain
+    webfaction_domain:
+        name: example.com
+        state: present
+        subdomains: 
+        - www
+        login_name: "{{webfaction_user}}"
+        login_password: "{{webfaction_passwd}}"
+  
+   
